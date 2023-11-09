@@ -5,16 +5,29 @@
 header {
     background-color: rgba(116, 57, 17, 0.5);
     color: white;
-    padding: 1rem;
+    padding-top: 3rem;
+    padding-left: 3rem;
 }
 
 img {
     width: 10%;
     height: 10%;
+
+}
+
+#title-1 {
+    padding: 3rem;
+}
+
+#title-2 {
+    padding: 3rem;
+}
+
+#title-3 {
+    padding: 3rem;
 }
 
 .flex-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
 }
