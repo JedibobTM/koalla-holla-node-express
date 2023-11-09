@@ -50,7 +50,7 @@ koalaRouter.put('/:id', (req, res) => {
 
     const sqlQueryText = `
     UPDATE "koalas"
-    SET "transfer_status" = true
+    SET "transfer_status" = NOT "transfer_status"
     WHERE "id" = ($1);
     `
 
@@ -67,5 +67,25 @@ koalaRouter.put('/:id', (req, res) => {
 })
 
 // DELETE
+
+koalaRouter.delete(`/:id`, (req, res) => {
+    const sqlQueryText =
+    `
+    DELETE FROM "koalas"
+      WHERE   "id" = ($1);
+    `
+    const sqlValues = [
+      req.params.id
+    ]
+    // console.log(`sql Values from html`, req.params);
+    pool.query(sqlQueryText, sqlValues)
+      .then((dbResult) => {
+        res.sendStatus(200)
+      })
+      .catch((dbError) => {
+        console.log(`DELETE /koalas SQL query failed: `, dbError)
+        res.sendStatus(500)
+      })
+  });
 
 module.exports = koalaRouter;

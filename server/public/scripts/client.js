@@ -21,7 +21,11 @@ function saveKoala(event){
                   transfer_status: document.getElementById('readyForTransferIn').value,
                   notes: document.getElementById('notesIn').value  
                 };
-
+  document.getElementById('nameIn').value = '';
+  document.getElementById('ageIn').value = '';
+  document.getElementById('genderIn').value = '';
+  document.getElementById('readyForTransferIn').value = '';
+  document.getElementById('notesIn').value = '';
   axios({
     url: '/koalas',
     method: 'POST',
@@ -51,6 +55,20 @@ function updateReady(event) {
  
 }
 
+function deleteButton(event) {
+  console.log('deleting');
+  let koalaId = event.target.closest('tr').getAttribute('data-koalaId');
+  axios({
+    url: `/koalas/${koalaId}`,
+    method: 'DELETE'
+  }).then((response) => {
+    getKoalas();
+  }).catch((error) =>{
+    console.log(error, 'Error in deleting koala');
+    alert('ERROR WE SUCK AT THIS SORRY');
+  })
+}  
+
 function renderKoalas(listOfKoalas) {
   let koalaTableBody = document.getElementById('viewKoalas');
   koalaTableBody.innerHTML = '';
@@ -63,7 +81,8 @@ function renderKoalas(listOfKoalas) {
     <td>${koala.gender}</td>
     <td>${koala.transfer_status}</td>
     <td>${koala.notes}</td>
-    <td>${koala.transfer_status != true ? `<button onclick="updateReady(event)">GET READY</button>` : `is ready`}</td>
+    <td>${koala.transfer_status != true ? `<button onclick="updateReady(event)">Get Ready</button>` : `<button onclick="updateReady(event)">Unready</button>`}</td>
+    <td><button onclick="deleteButton(event)">Kill</button></td>
   </tr>
     `
   }
