@@ -12,6 +12,7 @@ const pool = new pg.Pool({
 koalaRouter.get('/', (req, res) => {
     const sqlQueryText = `
         SELECT * FROM "koalas"
+        ORDER BY "id";
     `
     pool.query(sqlQueryText)
         .then((dbResult) => {
@@ -43,7 +44,27 @@ koalaRouter.post('/', (req, res) => {
 })
 
 // PUT
+koalaRouter.put('/:id', (req, res) => {
+    console.log('hopefully this works');
+    let idofKoala = req.params.id;
 
+    const sqlQueryText = `
+    UPDATE "koalas"
+    SET "transfer_status" = true
+    WHERE "id" = ($1);
+    `
+
+    const sqlValues = [idofKoala];
+
+    pool.query(sqlQueryText, sqlValues)
+    .then((dbResult) => {
+        res.sendStatus(201);
+        console.log('PUT successful');
+    }).catch((dbError) => {
+        res.sendStatus(500);
+    })
+
+})
 
 // DELETE
 

@@ -7,7 +7,6 @@ function getKoalas(){
     url: '/koalas',
     method: 'GET'
   }).then((response) => {
-    console.log('DO STUFF LATER FOR RENDERING', response.data);
     renderKoalas(response.data);
   })
 } // end getKoalas
@@ -22,7 +21,7 @@ function saveKoala(event){
                   transfer_status: document.getElementById('readyForTransferIn').value,
                   notes: document.getElementById('notesIn').value  
                 };
-  console.log('in koala', newKoala);
+
   axios({
     url: '/koalas',
     method: 'POST',
@@ -39,7 +38,7 @@ function saveKoala(event){
 function updateReady(event) {
   console.log('Getting ready');
   let koalaId = event.target.closest('tr').getAttribute('data-koalaId');
-
+  console.log(koalaId);
   axios({
     url: `/koalas/${koalaId}`,
     method: 'PUT'
@@ -54,11 +53,9 @@ function updateReady(event) {
 
 function renderKoalas(listOfKoalas) {
   let koalaTableBody = document.getElementById('viewKoalas');
-  console.log(koalaTableBody);
   koalaTableBody.innerHTML = '';
 
   for (koala of listOfKoalas) {
-    console.log('List of koalas:', koala);
     koalaTableBody.innerHTML += `
     <tr data-koalaId="${koala.id}">
     <td>${koala.name}</td>
