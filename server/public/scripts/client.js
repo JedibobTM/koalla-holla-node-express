@@ -36,6 +36,22 @@ function saveKoala(event){
  
 }
 
+function updateReady(event) {
+  console.log('Getting ready');
+  let koalaId = event.target.closest('tr').getAttribute('data-koalaId');
+
+  axios({
+    url: `/koalas/${koalaId}`,
+    method: 'PUT'
+  }).then((response) => {
+    getKoalas();
+  }).catch((error) =>{
+    console.log(error, 'Error in updating koala');
+    alert('ERROR WE SUCK AT THIS SORRY');
+  })
+ 
+}
+
 function renderKoalas(listOfKoalas) {
   let koalaTableBody = document.getElementById('viewKoalas');
   console.log(koalaTableBody);
@@ -44,12 +60,13 @@ function renderKoalas(listOfKoalas) {
   for (koala of listOfKoalas) {
     console.log('List of koalas:', koala);
     koalaTableBody.innerHTML += `
-    <tr>
+    <tr data-koalaId="${koala.id}">
     <td>${koala.name}</td>
     <td>${koala.age}</td>
     <td>${koala.gender}</td>
     <td>${koala.transfer_status}</td>
     <td>${koala.notes}</td>
+    <td>${koala.transfer_status != true ? `<button onclick="updateReady(event)">GET READY</button>` : `is ready`}</td>
   </tr>
     `
   }
