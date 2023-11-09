@@ -1,0 +1,14 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+header {
+    background-color: blue;
+    color: white;
+    padding: 1rem;
+}
+
+img {
+    width: 10%;
+    height: 10%;
+}
